@@ -27,21 +27,19 @@ func talk(message string) {
 /**
 ワード中のNGワードを置換
 */
-func replaceWord(word string) string {
+func replaceWord(word string) (filterdWord string) {
+	filterdWord = word
 	for _, keyword := range ngWords() {
 		replaceKeyword := makeReplaceKeyword(keyword)
-		word = strings.Replace(word, keyword, replaceKeyword, -1)
+		filterdWord = strings.Replace(filterdWord, keyword, replaceKeyword, -1)
 	}
-
-	return word
+	return
 }
 
 /**
 ワードの置換文字列を作成
 */
-func makeReplaceKeyword(word string) string {
-	replaceKeyword := ""
-	// count := utf8.RuneCountInString(word)
+func makeReplaceKeyword(word string) (replaceKeyword string) {
 	for _, val := range word {
 		if unicode.IsSpace(val) {
 			replaceKeyword += " "
@@ -49,13 +47,12 @@ func makeReplaceKeyword(word string) string {
 			replaceKeyword += "*"
 		}
 	}
-	return replaceKeyword
+	return
 }
 
 /**
 NGワード
 */
 func ngWords() []string {
-	words := []string{"fuck", "sit", "go to hell", "JAVA", "殺す"}
-	return words
+	return []string{"fuck", "sit", "go to hell", "JAVA", "殺す"}
 }
